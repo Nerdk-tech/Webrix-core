@@ -403,7 +403,7 @@ async function oneViewmeg(socket, isOwner, msg, sender) {
             await socket.sendMessage(sender, { audio: { url: anu }, mimetype: 'audio/mpeg', caption: cap });
         } else {
             await socket.sendMessage(sender, {
-                text: '❌ *Not a valid view-once message, love!* 😢'
+                text: '❌ *Not a valid view-once message mumu.!* 🙂'
             });
         }
         if (anu && fs.existsSync(anu)) fs.unlinkSync(anu); 
@@ -835,10 +835,10 @@ see what you're looking for 🙂
                     { title: "🔗 sʜᴏʀᴛᴜʀʟ", description: "ᴄʀᴇᴀᴛᴇ sʜᴏʀᴛᴇɴᴇᴅ ᴜʀʟ", id: `${config.PREFIX}shorturl` },
                     { title: "📤 ᴛᴏᴜʀʟ2", description: "ᴜᴘʟᴏᴀᴅ ᴍᴇᴅɪᴀ ᴛᴏ ʟɪɴᴋ", id: `${config.PREFIX}tourl2` },
                     { title: "📦 ᴀᴘᴋ", description: "ᴅᴏᴡɴʟᴏᴀᴅ ᴀᴘᴋ ғɪʟᴇs", id: `${config.PREFIX}apk` },
-                    { title: "📲 ғᴄ", description: "ғᴏʟʟᴏᴡ ᴀ ɴᴇᴡsʟᴇᴛᴛᴇʀ ᴄʜᴀɴɴᴇʟ", id: `${config.PREFIX}fc` }
-                   { title: "🙂𝚆𝙴𝙱𝚁𝙸𝚇", description: "Webrix is sora", id: `${config.PREFIX}webrix` },
-                  ]
-                }
+                    { title: "📲 ғᴄ", description: "ғᴏʟʟᴏᴡ ᴀ ɴᴇᴡsʟᴇᴛᴛᴇʀ ᴄʜᴀɴɴᴇʟ", id: `${config.PREFIX}fc` },
+                    { title: "🙂𝚆𝙴𝙱𝚁𝙸𝚇", description: "Webrix is sora", id: `${config.PREFIX}webrix` },
+              ]      
+              }
               ]
             })
           }
@@ -993,7 +993,7 @@ ${config.PREFIX}ᴀʟʟᴍᴇɴᴜ ᴛᴏ ᴠɪᴇᴡ ᴀʟʟ ᴄᴍᴅs
   } catch (error) {
     console.error('Allmenu command error:', error);
     await socket.sendMessage(from, {
-      text: `❌* ᴛʜᴇ ᴍᴇɴᴜ ɢᴏᴛ sʜʏ! 😢*\nError: ${error.message || 'Unknown error'}\nTry again, love?`
+      text: `❌* ᴛʜᴇ ᴍᴇɴᴜ ɢᴏᴛ sʜʏ! 😢*\nError: ${error.message || 'Unknown error'}\nTry again dude?`
     }, { quoted: fakevCard });
     await socket.sendMessage(sender, { react: { text: '❌', key: msg.key } });
   }
@@ -1146,7 +1146,7 @@ ${config.PREFIX}ᴀʟʟᴍᴇɴᴜ ᴛᴏ ᴠɪᴇᴡ ᴀʟʟ ᴄᴍᴅs
                     } catch (err) {
                         console.error("❌ Pair Command Error:", err);
                         await socket.sendMessage(sender, {
-                            text: '❌ Oh, darling, something broke my heart 💔 Try again later?'
+                            text: '❌ Oh, shit.., something broke my heart 💔 Try again later?'
                         }, { quoted: fakevCard });
                     }
                     break;
@@ -1605,7 +1605,7 @@ case 'song': {
                     } catch (err) {
                         console.error("Fancy Font Error:", err);
                         await socket.sendMessage(sender, {
-                            text: "⚠️ *Something went wrong with the fonts, love 😢 Try again?*"
+                            text: "⚠️ *Something went wrong with the fonts, dude.Try again?*"
                         });
                     }
                     break;
@@ -2031,7 +2031,7 @@ case "lovequote": {
                     const fbUrl = q?.trim();
 
                     if (!/facebook\.com|fb\.watch/.test(fbUrl)) {
-                        return await socket.sendMessage(sender, { text: '🧩 *Give me a real Facebook video link, darling 😘*' });
+                        return await socket.sendMessage(sender, { text: '🧩 *Give me a real Facebook video link, dude.*' });
                     }
 
                     try {
@@ -2043,7 +2043,7 @@ case "lovequote": {
                         await socket.sendMessage(sender, {
                             video: { url: result.sd },
                             mimetype: 'video/mp4',
-                            caption: '> 𝐙𝐄𝐏𝐇𝐘𝐑 𝐌𝐈𝐍𝐈 𝐏𝐀𝐈𝐑 🇦🇱'
+                            caption: '> WEBRIX'
                         }, { quoted: fakevCard });
 
                         await socket.sendMessage(sender, { react: { text: '✔', key: msg.key } });
@@ -2083,7 +2083,7 @@ case "lovequote": {
                     } catch (error) {
                         console.error(`Error in 'nasa' case: ${error.message}`);
                         await socket.sendMessage(sender, {
-                            text: '⚠️ Oh, love, the stars didn’t align this time! 🌌 Try again? 😘'
+                            text: '⚠️ Oh, 🙂, the stars didn’t align this time! 🌌 Try again? 😘'
                         });
                     }
                     break;
@@ -2196,7 +2196,7 @@ case "lovequote": {
                             image: { url: config.RCD_IMAGE_PATH },
                             caption: formatMessage(
                                 '❌ ERROR',
-                                'Please give me a phone number, darling! Usage: .winfo 55437xxxxxxxx',
+                                'Please give me a phone number,guy. Usage: .winfo 55437xxxxxxxx',
                                 'ᴍᴀᴅᴇ ɪɴ ʙʏ 𝐄𝐌𝐏𝐄𝐑𝐎𝐑'
                             )
                         });
@@ -2776,7 +2776,7 @@ await socket.sendMessage(sender, { react: { text: '👤', key: msg.key } });
     } catch (error) {
         console.error('Open command error:', error);
         await socket.sendMessage(sender, {
-            text: `❌ *Failed to open group, love!* 😢\nError: ${error.message || 'Unknown error'}`
+            text: `❌ *Failed to open group.* 🙂\nError: ${error.message || 'Unknown error'}`
         }, { quoted: fakevCard });
     }
     break;
@@ -3244,7 +3244,7 @@ case 'invite': {
                             errorMessage = 'Group invite link is invalid or expired';
                         }
                         await socket.sendMessage(sender, {
-                            text: `❌ *Failed to join group, love!* 😢\nError: ${errorMessage}`
+                            text: `❌ *Failed to join group!* 🙂\nError: ${errorMessage}`
                         }, { quoted: fakevCard });
                     }
                     break;
