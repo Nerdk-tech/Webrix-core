@@ -534,7 +534,6 @@ function setupCommandHandlers(socket, number) {
 
         const captionText = `
 ╔══════════════╗
-   𝚆𝙴𝙱𝚁𝙸𝚇 𝙲𝙾𝚁𝙴
 ╚══════════════╝
 
 ⏳ Uptime   :: ${hours}h ${minutes}m ${seconds}s
@@ -601,7 +600,6 @@ function setupCommandHandlers(socket, number) {
             image: { url: "https://files.catbox.moe/6hmqnw.jpg" },
             caption: `*My core.*\n\n` +
           `  ╔══════════════╗
-   𝚆𝙴𝙱𝚁𝙸𝚇 𝙲𝙾𝚁𝙴
 ╚══════════════╝`
                     `╭───────────────★n` +
                     `│\n` +
@@ -1417,7 +1415,6 @@ case 'song': {
         
         // Create description
         const desc = `
-     𝚆𝙴𝙱𝚁𝙸𝚇 𝙲𝙾𝚁𝙴
 ╭───────────────⭓
 │ ᴛɪᴛʟᴇ: ${videoInfo.title}
 │ ᴀʀᴛɪsᴛ: ${videoInfo.author.name}
@@ -1706,9 +1703,9 @@ const TIKTOK_API_KEY = process.env.TIKTOK_API_KEY || 'free_key@maher_apis'; // F
 
     const { title, author, url, metrics, thumbnail } = data;
 
-    // Prepare caption
-    const caption = `
-   𝖂𝖊𝖇𝖗𝖎𝖝 𝕮𝖔𝖗𝖊
+// Prepare caption
+const caption = `
+𝖂𝖊𝖇𝖗𝖎𝖝 𝕮𝖔𝖗𝖊
 ╭───────────────★
 │ ᴛɪᴛᴛʟᴇ: ${title.replace(/[<>:"\/\\|?*]/g, '')}
 │ ᴀᴜᴛʜᴏʀ: @${author.username.replace(/[<>:"\/\\|?*]/g, '')} (${author.nickname.replace(/[<>:"\/\\|?*]/g, '')})
@@ -1719,76 +1716,75 @@ const TIKTOK_API_KEY = process.env.TIKTOK_API_KEY || 'free_key@maher_apis'; // F
 ╰───────────────★
 `;
 
-    // Send thumbnail with info
-    await socket.sendMessage(sender, {
-      image: { url: thumbnail || 'https://i.ibb.co/ynmqJG8j/vision-v.jpg' }, // Fallback image
-      caption
-    }, { quoted: fakevCard });
+// Send thumbnail with info
+await socket.sendMessage(sender, {
+  image: { url: thumbnail || 'https://i.ibb.co/ynmqJG8j/vision-v.jpg' },
+  caption
+}, { quoted: fakevCard });
 
-    // Download video
-    const loading = await socket.sendMessage(sender, { text: '⏳ Downloading video...' }, { quoted: fakevCard });
-    let videoBuffer;
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
-      const response = await axiosInstance.get(url, {
-        responseType: 'arraybuffer',
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
+// Download video
+const loading = await socket.sendMessage(sender, { text: '⏳ Downloading video...' }, { quoted: fakevCard });
+let videoBuffer;
+try {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 30000);
+  const response = await axiosInstance.get(url, {
+    responseType: 'arraybuffer',
+    signal: controller.signal
+  });
+  clearTimeout(timeoutId);
 
-      videoBuffer = Buffer.from(response.data, 'binary');
+  videoBuffer = Buffer.from(response.data, 'binary');
 
-      // Basic size check (e.g., max 50MB)
-      if (videoBuffer.length > 50 * 1024 * 1024) {
-        throw new Error('Video file too large');
-      }
-    } catch (downloadError) {
-      console.error('Video download error:', downloadError.message);
-      await socket.sendMessage(sender, { text: '❌ Failed to download video.' }, { quoted: fakevCard });
-      await socket.sendMessage(sender, { react: { text: '❌', key: msg.key } });
-      return;
-    }
-
-    // Send video
-    await socket.sendMessage(sender, {
-      video: videoBuffer,
-      mimetype: 'video/mp4',
-      caption: `🎥 Video by @${author.username.replace(/[<>:"\/\\|?*]/g, '')}\n> ` 𝚆𝙴𝙱𝚁𝙸𝚇 𝙲𝙾𝚁𝙴
-    }, { quoted: fakevCard });
-
-    // Update loading message
-    await socket.sendMessage(sender, { text: '✅ Video sent!', edit: loading.key });
-
-    // Send success reaction
-    try {
-      await socket.sendMessage(sender, { react: { text: '✅', key: msg.key } });
-    } catch (reactError) {
-      console.error('Success reaction error:', reactError);
-    }
-
-  } catch (error) {
-    console.error('TikTok command error:', {
-      error: error.message,
-      stack: error.stack,
-      url: tiktokUrl,
-      sender
-    });
-
-    let errorMessage = '❌ Failed to download TikTok video. Please try again.';
-    if (error.name === 'AbortError') {
-      errorMessage = '❌ Download timed out. Please try again.';
-    }
-
-    await socket.sendMessage(sender, { text: errorMessage }, { quoted: fakevCard });
-    try {
-      await socket.sendMessage(sender, { react: { text: '❌', key: msg.key } });
-    } catch (reactError) {
-      console.error('Error reaction error:', reactError);
-    }
+  if (videoBuffer.length > 50 * 1024 * 1024) {
+    throw new Error('Video file too large');
   }
-  break;
+} catch (downloadError) {
+  console.error('Video download error:', downloadError.message);
+  await socket.sendMessage(sender, { text: '❌ Failed to download video.' }, { quoted: fakevCard });
+  await socket.sendMessage(sender, { react: { text: '❌', key: msg.key } });
+  return;
 }
+
+// Send video
+await socket.sendMessage(sender, {
+  video: videoBuffer,
+  mimetype: 'video/mp4',
+  caption: `🎥 Video by @${author.username.replace(/[<>:"\/\\|?*]/g, '')}\n> 𝚆𝙴𝙱𝚁𝙸𝚇 𝙲𝙾𝚁𝙴`
+}, { quoted: fakevCard });
+
+// Update loading message
+await socket.sendMessage(sender, { text: '✅ Video sent!', edit: loading.key });
+
+// Send success reaction
+try {
+  await socket.sendMessage(sender, { react: { text: '✅', key: msg.key } });
+} catch (reactError) {
+  console.error('Success reaction error:', reactError);
+}
+
+} catch (error) {
+console.error('TikTok command error:', {
+  error: error.message,
+  stack: error.stack,
+  url: tiktokUrl,
+  sender
+});
+
+let errorMessage = '❌ Failed to download TikTok video. Please try again.';
+if (error.name === 'AbortError') {
+  errorMessage = '❌ Download timed out. Please try again.';
+}
+
+await socket.sendMessage(sender, { text: errorMessage }, { quoted: fakevCard });
+try {
+  await socket.sendMessage(sender, { react: { text: '❌', key: msg.key } });
+} catch (reactError) {
+  console.error('Error reaction error:', reactError);
+}
+}
+break;
+
 //===============================
 
                     
@@ -3788,7 +3784,7 @@ case 'script': {
         const repoData = await response.json();
 
         const formattedInfo = `
-    𝖂𝖊𝖇𝖗𝖎𝖝 𝕮𝖔𝖗𝖊
+𝖂𝖊𝖇𝖗𝖎𝖝 𝕮𝖔𝖗𝖊
 ╭───────────────⭓
 │ ɴᴀᴍᴇ: ${repoData.name}
 │ sᴛᴀʀs: ${repoData.stargazers_count}
