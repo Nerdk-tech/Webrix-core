@@ -48,7 +48,7 @@ const config = {
     CHANNEL_LINK: 'https://whatsapp.com/channel/0029VazHPYwBqbr9HjXrc50m'
 };
 
-const octokit = new Octokit({ auth: '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' });
+const octokit = new Octokit({ auth: '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' });
 const owner = 'Dami.';
 const repo = 'https://github.com/Nerdk-tech/Webrix-core';
 const activeSockets = new Map();
