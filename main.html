@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>𝚆𝙴𝙱𝚁𝙸𝚇 𝙲𝙾𝚁𝙴 — Secure Pair</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;500;600&display=swap');
+
+    :root {
+      --bg1: #05070f;
+      --bg2: #0b1022;
+      --neon1: #6cf2ff;
+      --neon2: #8b5cf6;
+      --neon3: #ff2a6d;
+      --glass: rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(139,92,246,0.15), transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(108,242,255,0.12), transparent 50%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      font-family: 'Rajdhani', sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Grid overlay */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(108,242,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108,242,255,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: -1;
+    }
+
+    .particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: float 16s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(110vh) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-120px) translateX(60px); opacity: 0; }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      padding: 20px;
+    }
+
+    .card {
+      position: relative;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      padding: 28px 24px;
+      backdrop-filter: blur(16px);
+      box-shadow:
+        0 15px 40px rgba(0,0,0,0.5),
+        0 0 25px rgba(139,92,246,0.15);
+      overflow: hidden;
+      transition: 0.4s ease;
+    }
+
+    .card:hover {
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.6),
+        0 0 35px rgba(108,242,255,0.25);
+      transform: translateY(-2px);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg,
+        transparent,
+        rgba(139,92,246,0.15),
+        rgba(108,242,255,0.15),
+        transparent
+      );
+      animation: shine 7s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes shine {
+      from { transform: translateX(-100%) rotate(45deg); }
+      to   { transform: translateX(100%) rotate(45deg); }
+    }
+
+    /* Logo */
+    .logo {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .logo-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--neon2), var(--neon1));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 12px rgba(139,92,246,0.5);
+    }
+
+    .logo-sub {
+      font-size: 12px;
+      letter-spacing: 3px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin: 18px 0 20px;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px 0;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--glass-border);
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: 0.25s ease;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, var(--neon2), var(--neon1));
+      color: #000;
+      box-shadow: 0 0 15px rgba(108,242,255,0.4);
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 16px;
+      color: var(--neon1);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      text-shadow: 0 0 6px rgba(108,242,255,0.6);
+    }
+
+    h6 {
+      font-size: 13px;
+      opacity: 0.7;
+      margin-bottom: 18px;
+    }
+
+    /* Inputs */
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .input {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 13px 14px;
+      color: #fff;
+      font-size: 15px;
+      font-family: 'Rajdhani', sans-serif;
+      transition: 0.25s ease;
+    }
+
+    .input:focus {
+      outline: none;
+      border-color: var(--neon1);
+      box-shadow: 0 0 12px rgba(108,242,255,0.25);
+      background: rgba(0,0,0,0.45);
+    }
+
+    .btn {
+      margin-top: 6px;
+      padding: 13px;
+      border-radius: 10px;
+      border: none;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      color: #000;
+      background: linear-gradient(135deg, var(--neon2), var(--neon1));
+      transition: 0.3s ease;
+      box-shadow: 0 0 12px rgba(108,242,255,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 18px rgba(108,242,255,0.45);
+    }
+
+    /* Messages */
+    .message {
+      margin-top: 10px;
+      font-size: 14px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .message.error {
+      background: rgba(255,42,109,0.1);
+      border-color: rgba(255,42,109,0.4);
+      color: #ff7a9c;
+    }
+
+    .message.success {
+      background: rgba(108,242,255,0.1);
+      border-color: rgba(108,242,255,0.4);
+      color: var(--neon1);
+    }
+
+    /* Pair Code Display */
+    #pair {
+      margin-top: 14px;
+      min-height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .code-display {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 12px 18px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      cursor: pointer;
+      transition: 0.25s ease;
+      box-shadow: 0 0 12px rgba(139,92,246,0.2);
+    }
+
+    .code-display:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 18px rgba(108,242,255,0.35);
+    }
+
+    .code-text {
+      opacity: 0.7;
+    }
+
+    .code-value {
+      color: var(--neon1);
+      text-shadow: 0 0 6px rgba(108,242,255,0.7);
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(108,242,255,0.4); }
+      70% { box-shadow: 0 0 0 12px rgba(108,242,255,0); }
+      100% { box-shadow: 0 0 0 0 rgba(108,242,255,0); }
+    }
+
+    /* Why choose section */
+    .why {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .why-item {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      transition: 0.25s ease;
+    }
+
+    .why-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 14px rgba(108,242,255,0.25);
+    }
+
+    .why-icon {
+      color: var(--neon1);
+      font-size: 18px;
+      text-shadow: 0 0 6px rgba(108,242,255,0.7);
+      min-width: 22px;
+    }
+
+    .why-text strong {
+      display: block;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .why-text span {
+      font-size: 13px;
+      opacity: 0.7;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 11px;
+      opacity: 0.5;
+      letter-spacing: 2px;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 24px 18px;
+      }
+
+      .logo-title {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+    <div class="card">
+
+      <!-- LOGO -->
+      <div class="logo">
+        <div class="logo-title">𝚆𝙴𝙱𝚁𝙸𝚇 𝙲𝙾𝚁𝙴</div>
+        <div class="logo-sub">NONCHALANT SYSTEM NODE</div>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <div class="tab active" id="tab-login">LOGIN</div>
+        <div class="tab" id="tab-signup">SIGN UP</div>
+        <div class="tab" id="tab-pair">PAIR</div>
+      </div>
+
+      <!-- LOGIN -->
+      <div class="section active" id="login-section">
+        <h3>Access Node</h3>
+        <h6>Enter your credentials to continue.</h6>
+
+        <div class="input-group">
+          <input class="input" id="login-username" placeholder="Username" />
+          <input class="input" id="login-key" placeholder="Login Key" type="password" />
+        </div>
+
+        <button class="btn" id="login-btn">LOGIN</button>
+        <div id="login-msg"></div>
+      </div>
+
+      <!-- SIGNUP -->
+      <div class="section" id="signup-section">
+        <h3>Create Identity</h3>
+        <h6>Generate your WEBRIX CORE access profile.</h6>
+
+        <div class="input-group">
+          <input class="input" id="signup-username" placeholder="Choose username" />
+          <input class="input" id="signup-key" placeholder="Create login key" type="password" />
+        </div>
+
+        <button class="btn" id="signup-btn">SIGN UP</button>
+        <div id="signup-msg"></div>
+      </div>
+
+      <!-- PAIR -->
+      <div class="section" id="pair-section">
+        <h3>Device Pairing</h3>
+        <h6>Link your WhatsApp number to WEBRIX CORE.</h6>
+
+        <div class="input-group">
+          <input class="input" placeholder="+234xxxxxxxxxx" type="tel" id="number" />
+        </div>
+
+        <button class="btn" id="submit">REQUEST CODE</button>
+        <div id="waiting-message" style="display:none;margin-top:10px;color:var(--neon1);font-family:Orbitron;text-shadow:0 0 6px rgba(108,242,255,0.7)">Processing...</div>
+        <main id="pair"></main>
+      </div>
+
+      <!-- WHY CHOOSE -->
+      <div class="section" id="why-section" style="display:block;margin-top:18px">
+        <h3>Why Choose WEBRIX CORE?</h3>
+        <h6>Built different. Moves silent. Hits precise.</h6>
+
+        <div class="why">
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-bolt"></i></div>
+            <div class="why-text">
+              <strong>Ultra-Fast Core</strong>
+              <span>Low latency execution and optimized command routing.</span>
+            </div>
+          </div>
+
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-shield-halved"></i></div>
+            <div class="why-text">
+              <strong>Secure Architecture</strong>
+              <span>Encrypted sessions and isolated process handling.</span>
+            </div>
+          </div>
+
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-brain"></i></div>
+            <div class="why-text">
+              <strong>Smart Automation</strong>
+              <span>Adaptive command logic and intelligent task flows.</span>
+            </div>
+          </div>
+
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-user-ninja"></i></div>
+            <div class="why-text">
+              <strong>Nonchalant UX</strong>
+              <span>Clean, silent, minimal — zero noise, all power.</span>
+            </div>
+          </div>
+
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-code"></i></div>
+            <div class="why-text">
+              <strong>Developer First</strong>
+              <span>Built by Damini. Tuned for builders.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        WEBRIX CORE • DAMINI • SYSTEM ONLINE
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script>
+    const particlesContainer = document.getElementById('particles');
+
+    function createParticles() {
+      const count = 35;
+      const colors = [
+        'rgba(108,242,255,0.35)',
+        'rgba(139,92,246,0.35)',
+        'rgba(255,42,109,0.35)'
+      ];
+
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+
+        const size = Math.random() * 10 + 3;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = Math.random() * 15 + 12 + 's';
+        p.style.animationDelay = Math.random() * 6 + 's';
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+        particlesContainer.appendChild(p);
+      }
+    }
+    createParticles();
+
+    // Tabs
+    const tabLogin = document.getElementById('tab-login');
+    const tabSignup = document.getElementById('tab-signup');
+    const tabPair = document.getElementById('tab-pair');
+
+    const loginSection = document.getElementById('login-section');
+    const signupSection = document.getElementById('signup-section');
+    const pairSection = document.getElementById('pair-section');
+
+    function activateTab(tab, section) {
+      [tabLogin, tabSignup, tabPair].forEach(t => t.classList.remove('active'));
+      [loginSection, signupSection, pairSection].forEach(s => s.classList.remove('active'));
+
+      tab.classList.add('active');
+      section.classList.add('active');
+    }
+
+    tabLogin.onclick = () => activateTab(tabLogin, loginSection);
+    tabSignup.onclick = () => activateTab(tabSignup, signupSection);
+    tabPair.onclick = () => activateTab(tabPair, pairSection);
+
+    // Mock Auth System (Frontend Only)
+    const loginBtn = document.getElementById('login-btn');
+    const signupBtn = document.getElementById('signup-btn');
+    const loginMsg = document.getElementById('login-msg');
+    const signupMsg = document.getElementById('signup-msg');
+
+    loginBtn.onclick = () => {
+      const u = document.getElementById('login-username').value.trim();
+      const k = document.getElementById('login-key').value.trim();
+
+      if (!u || !k) {
+        loginMsg.innerHTML = '<div class="message error"><i class="fas fa-circle-exclamation"></i> Enter username and login key.</div>';
+        return;
+      }
+
+      // Mock validation
+      if (k.length < 4) {
+        loginMsg.innerHTML = '<div class="message error"><i class="fas fa-lock"></i> Invalid login key.</div>';
+      } else {
+        loginMsg.innerHTML = '<div class="message success"><i class="fas fa-check"></i> Access granted. Welcome, ' + u + '.</div>';
+        setTimeout(() => activateTab(tabPair, pairSection), 700);
+      }
+    };
+
+    signupBtn.onclick = () => {
+      const u = document.getElementById('signup-username').value.trim();
+      const k = document.getElementById('signup-key').value.trim();
+
+      if (!u || !k) {
+        signupMsg.innerHTML = '<div class="message error"><i class="fas fa-circle-exclamation"></i> Username and key required.</div>';
+        return;
+      }
+
+      if (k.length < 4) {
+        signupMsg.innerHTML = '<div class="message error"><i class="fas fa-lock"></i> Login key too short.</div>';
+      } else {
+        signupMsg.innerHTML = '<div class="message success"><i class="fas fa-user-plus"></i> Profile created. You can now log in.</div>';
+        setTimeout(() => activateTab(tabLogin, loginSection), 900);
+      }
+    };
+
+    // Pairing Logic
+    const a = document.getElementById("pair");
+    const b = document.getElementById("submit");
+    const c = document.getElementById("number");
+    const waitingMessage = document.getElementById("waiting-message");
+
+    async function Copy() {
+      const text = document.getElementById("copy-value").innerText;
+      const codeDisplay = document.getElementById("code-display");
+      await navigator.clipboard.writeText(text);
+
+      codeDisplay.innerHTML = '<i class="fas fa-check" style="color:#00ff9c"></i> COPIED';
+      codeDisplay.style.boxShadow = '0 0 15px rgba(0,255,156,0.6)';
+
+      setTimeout(() => {
+        codeDisplay.innerHTML = `
+          <i class="fas fa-copy" style="color:var(--neon1)"></i>
+          <span class="code-text">CODE:</span>
+          <span class="code-value" id="copy-value">${text}</span>
+        `;
+        codeDisplay.style.boxShadow = '0 0 12px rgba(139,92,246,0.25)';
+      }, 2000);
+    }
+
+    b.addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      if (!c.value) {
+        a.innerHTML = '<div class="message error"><i class="fas fa-circle-exclamation"></i> Enter your WhatsApp number with country code.</div>';
+        return;
+      }
+
+      if (c.value.replace(/[^0-9]/g, "").length < 11) {
+        a.innerHTML = '<div class="message error"><i class="fas fa-xmark"></i> Invalid number format.</div>';
+        return;
+      }
+
+      const bc = c.value.replace(/[^0-9]/g, "");
+      c.value = "+" + bc;
+      waitingMessage.style.display = "block";
+      a.innerHTML = "";
+
+      try {
+        const { data } = await axios(`/code?number=${bc}`);
+        const code = data.code || "SERVICE_DOWN";
+        waitingMessage.style.display = "none";
+
+        a.innerHTML = `
+          <div class="code-display pulse" id="code-display" onclick="Copy()">
+            <i class="fas fa-copy" style="color:var(--neon1)"></i>
+            <span class="code-text">CODE:</span>
+            <span class="code-value" id="copy-value">${code}</span>
+          </div>
+        `;
+      } catch (err) {
+        waitingMessage.style.display = "none";
+        a.innerHTML = '<div class="message error"><i class="fas fa-triangle-exclamation"></i> Service unavailable.</div>';
+      }
+    });
+  </script>
+</body>
+</html>
