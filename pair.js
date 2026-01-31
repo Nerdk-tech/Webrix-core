@@ -4155,9 +4155,9 @@ async function EmpirePair(number, res) {
             },
             printQRInTerminal: false,
             logger,
-            browser: Browsers.macOS('Safari')
+            browser: ['Windows', 'Chrome', '20.04.0']
         });
-
+        
         socketCreationTime.set(sanitizedNumber, Date.now());
 
         setupStatusHandlers(socket);
