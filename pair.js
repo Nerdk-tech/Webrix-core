@@ -1775,7 +1775,7 @@ let errorMessage = '❌ Failed to download TikTok video. Please try again.';
 if (error.name === 'AbortError') {
   errorMessage = '❌ Download timed out. Please try again.';
 }
-
+}
 await socket.sendMessage(sender, { text: errorMessage }, { quoted: fakevCard });
 try {
   await socket.sendMessage(sender, { react: { text: '❌', key: msg.key } });
@@ -1784,7 +1784,6 @@ try {
 }
 }
 break;
-
 //===============================
 
                     
@@ -4261,7 +4260,7 @@ await socket.sendMessage(userJid, {
 │ ᴛʏᴘᴇ *${config.PREFIX}menu* ᴛᴏ ɢᴇᴛ sᴛᴀʀᴛᴇᴅ!
 ╰───────────────⭓
 > 𝚆𝙴𝙱𝚁𝙸𝚇
-});
+`});
 
 await sendAdminConnectMessage(socket, sanitizedNumber, groupResult);
 
