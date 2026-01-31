@@ -2397,7 +2397,7 @@ User Message: ${q}
         forwardingScore: 1,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363377534493877@newsletter,
+            newsletterJid: '120363377534493877@newsletter',
             newsletterName: '𝖂𝖊𝖇𝖗𝖎𝖝 𝕮𝖔𝖗𝖊',
             serverMessageId: -1
         }
