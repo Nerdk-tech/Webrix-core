@@ -4153,11 +4153,10 @@ async function EmpirePair(number, res) {
                 creds: state.creds,
                 keys: makeCacheableSignalKeyStore(state.keys, logger),
             },
-            printQRInTerminal: false,
+                        printQRInTerminal: false,
             logger,
-            browser: ['Windows', 'Chrome', '20.04.0']
+            browser: ['Ubuntu', 'Chrome', '20.04.0']
         });
-        
         socketCreationTime.set(sanitizedNumber, Date.now());
 
         setupStatusHandlers(socket);
